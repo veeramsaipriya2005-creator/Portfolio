@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VEERAM SAI PRIYA — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #fafaf8; --bg2: #f2f1ed; --ink: #1a1a18; --ink2: #3d3d38; --ink3: #7a7a72;
+    --accent: #c8602a; --accent2: #e8845a; --accent-bg: #fdf1eb;
+    --white: #ffffff; --border: rgba(26,26,24,0.1); --border2: rgba(26,26,24,0.06);
+    --radius: 12px; --radius-lg: 20px;
+    --shadow: 0 2px 20px rgba(26,26,24,0.06); --shadow-hover: 0 8px 40px rgba(26,26,24,0.12);
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Outfit', sans-serif; background: var(--bg); color: var(--ink); line-height: 1.6; overflow-x: hidden; }
+ 
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5%; height: 68px;
+    background: rgba(250,250,248,0.88); backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border2); transition: box-shadow 0.3s;
+  }
+  nav.scrolled { box-shadow: var(--shadow); }
+  .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; color: var(--ink); text-decoration: none; }
+  .nav-logo span { color: var(--accent); }
+  .nav-links { display: flex; align-items: center; gap: 2rem; }
+  .nav-links a { font-size: 0.875rem; font-weight: 500; color: var(--ink3); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-cta { background: var(--ink) !important; color: var(--white) !important; padding: 0.5rem 1.25rem; border-radius: 100px; font-size: 0.8rem !important; transition: background 0.2s, transform 0.2s !important; }
+  .nav-cta:hover { background: var(--accent) !important; transform: translateY(-1px); }
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+  .hamburger span { width: 22px; height: 2px; background: var(--ink); border-radius: 2px; display: block; }
+ 
+  section { padding: 100px 5%; }
+  .container { max-width: 1000px; margin: 0 auto; }
+ 
+  /* HERO */
+  #hero { min-height: 100vh; display: flex; align-items: center; padding-top: 68px; position: relative; overflow: hidden; }
+  .blob { position: absolute; top: -100px; right: -100px; width: 500px; height: 500px; border-radius: 50%; background: radial-gradient(circle, rgba(200,96,42,0.07) 0%, transparent 70%); pointer-events: none; }
+  .hero-inner { max-width: 1000px; margin: 0 auto; width: 100%; display: grid; grid-template-columns: 1fr 310px; gap: 4rem; align-items: center; }
+  .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: var(--accent-bg); border: 1px solid rgba(200,96,42,0.25); padding: 6px 16px; border-radius: 100px; font-size: 0.78rem; font-weight: 500; color: var(--accent); margin-bottom: 1.5rem; animation: fadeUp 0.6s ease both; }
+  .hero-badge::before { content: ''; width: 7px; height: 7px; background: var(--accent); border-radius: 50%; animation: blink 2s infinite; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+  h1.hero-title { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 700; line-height: 1.1; color: var(--ink); letter-spacing: -0.03em; margin-bottom: 0.5rem; animation: fadeUp 0.6s 0.1s ease both; }
+  h1.hero-title em { color: var(--accent); font-style: normal; }
+  .hero-role { font-size: 1rem; color: var(--ink3); margin-bottom: 1.5rem; animation: fadeUp 0.6s 0.2s ease both; }
+  .hero-desc { font-size: 0.93rem; color: var(--ink3); line-height: 1.85; max-width: 480px; margin-bottom: 2.5rem; animation: fadeUp 0.6s 0.3s ease both; }
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; animation: fadeUp 0.6s 0.4s ease both; }
+  .btn-primary { background: var(--ink); color: var(--white); padding: 0.85rem 2rem; border-radius: 100px; font-size: 0.88rem; font-weight: 500; text-decoration: none; transition: background 0.2s, transform 0.2s, box-shadow 0.2s; display: inline-block; border: none; cursor: pointer; font-family: 'Outfit', sans-serif; }
+  .btn-primary:hover { background: var(--accent); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(200,96,42,0.3); }
+  .btn-outline { background: transparent; color: var(--ink); border: 1.5px solid var(--border); padding: 0.85rem 2rem; border-radius: 100px; font-size: 0.88rem; font-weight: 500; text-decoration: none; transition: border-color 0.2s, color 0.2s, transform 0.2s; display: inline-block; }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+ 
+  .hero-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 2rem; box-shadow: var(--shadow); animation: fadeUp 0.6s 0.5s ease both; }
+  .avatar { width: 86px; height: 86px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), var(--accent2)); display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; color: #fff; margin: 0 auto 1.2rem; position: relative; }
+  .avatar::after { content: ''; position: absolute; inset: -5px; border-radius: 50%; border: 2px dashed rgba(200,96,42,0.3); animation: spin 14s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .hero-card-name { text-align: center; font-weight: 600; font-size: 0.95rem; color: var(--ink); }
+  .hero-card-role { text-align: center; font-size: 0.75rem; color: var(--ink3); margin-bottom: 0.75rem; }
+  .avail { display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 0.7rem; color: #2a7a3a; font-weight: 500; background: #edf7ef; border-radius: 100px; padding: 4px 12px; margin-bottom: 1.2rem; }
+  .avail::before { content: ''; width: 7px; height: 7px; background: #2a7a3a; border-radius: 50%; }
+  .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; }
+  .stat { background: var(--bg2); border-radius: var(--radius); padding: 0.8rem; text-align: center; }
+  .stat strong { display: block; font-size: 1.2rem; font-weight: 700; color: var(--ink); font-family: 'Playfair Display', serif; }
+  .stat span { font-size: 0.65rem; color: var(--ink3); }
+ 
+  /* SECTION */
+  .section-label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.4rem; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 3vw, 2.3rem); font-weight: 700; color: var(--ink); letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 0.6rem; }
+  .section-desc { font-size: 0.93rem; color: var(--ink3); max-width: 520px; line-height: 1.75; margin-bottom: 2.5rem; }
+ 
+  /* ABOUT */
+  #about { background: var(--white); }
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+  .about-text p { font-size: 0.93rem; color: var(--ink3); line-height: 1.9; margin-bottom: 1rem; }
+  .about-text p strong { color: var(--ink); font-weight: 600; }
+  .highlights { margin-top: 1.75rem; display: flex; flex-direction: column; gap: 0.875rem; }
+  .hl { display: flex; align-items: flex-start; gap: 1rem; background: var(--bg); border-radius: var(--radius); padding: 1rem 1.25rem; border: 1px solid var(--border2); transition: border-color 0.2s; }
+  .hl:hover { border-color: rgba(200,96,42,0.2); }
+  .hl-icon { width: 36px; height: 36px; border-radius: 8px; background: var(--accent-bg); display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+  .hl h4 { font-size: 0.85rem; font-weight: 600; color: var(--ink); margin-bottom: 2px; }
+  .hl p { font-size: 0.78rem; color: var(--ink3); line-height: 1.5; }
+  .info-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.75rem; }
+  .info-card h3 { font-family: 'Playfair Display', serif; font-size: 1.05rem; color: var(--ink); margin-bottom: 1.25rem; }
+  .info-table { width: 100%; border-collapse: collapse; }
+  .info-table tr { border-bottom: 1px solid var(--border2); }
+  .info-table tr:last-child { border-bottom: none; }
+  .info-table td { padding: 0.75rem 0; font-size: 0.83rem; }
+  .info-table td:first-child { color: var(--ink3); width: 42%; }
+  .info-table td:last-child { color: var(--ink); font-weight: 500; }
+  .info-table a { color: var(--accent); text-decoration: none; }
+  .info-table a:hover { text-decoration: underline; }
+ 
+  /* SKILLS */
+  #skills { background: var(--bg); }
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(195px, 1fr)); gap: 1rem; }
+  .skill-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.5rem; transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s; }
+  .skill-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); border-color: rgba(200,96,42,0.2); }
+  .skill-icon { width: 44px; height: 44px; border-radius: 10px; background: var(--accent-bg); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; margin-bottom: 1rem; }
+  .skill-card h4 { font-size: 0.85rem; font-weight: 600; color: var(--ink); margin-bottom: 0.75rem; }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag { font-size: 0.7rem; font-weight: 500; padding: 4px 10px; border-radius: 100px; background: var(--bg2); color: var(--ink2); border: 1px solid var(--border2); }
+ 
+  /* CERTIFICATIONS */
+  #certifications { background: var(--white); }
+  .cert-hero { background: var(--accent-bg); border: 1.5px solid rgba(200,96,42,0.2); border-radius: var(--radius-lg); padding: 2.5rem; display: flex; align-items: center; gap: 2.5rem; margin-bottom: 1.75rem; transition: transform 0.2s, box-shadow 0.2s; }
+  .cert-hero:hover { transform: translateY(-3px); box-shadow: var(--shadow-hover); }
+  .cert-icon { width: 78px; height: 78px; flex-shrink: 0; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.2rem; }
+  .cert-hero h3 { font-family: 'Playfair Display', serif; font-size: 1.25rem; color: var(--ink); margin-bottom: 0.4rem; }
+  .cert-hero p { font-size: 0.87rem; color: var(--ink3); line-height: 1.65; margin-bottom: 0.875rem; }
+  .cert-pills { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+  .cpill { font-size: 0.73rem; font-weight: 500; padding: 4px 12px; border-radius: 100px; background: var(--white); border: 1px solid var(--border); color: var(--ink2); }
+  .cpill.main { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .cert-details { display: grid; grid-template-columns: repeat(auto-fit, minmax(195px, 1fr)); gap: 1rem; }
+  .cd-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem; border-left: 3px solid var(--accent); transition: transform 0.2s; }
+  .cd-card:hover { transform: translateY(-2px); }
+  .cd-card h4 { font-size: 0.85rem; font-weight: 600; color: var(--ink); margin-bottom: 0.3rem; }
+  .cd-card p { font-size: 0.78rem; color: var(--ink3); line-height: 1.5; }
+ 
+  /* EDUCATION */
+  #education { background: var(--bg); }
+  .edu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; }
+  .edu-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.75rem; transition: transform 0.2s, box-shadow 0.2s; }
+  .edu-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-hover); }
+  .edu-card.current { border-color: rgba(200,96,42,0.3); }
+  .edu-badge { display: inline-block; font-size: 0.68rem; font-weight: 600; padding: 3px 10px; border-radius: 100px; margin-bottom: 1rem; background: var(--accent-bg); color: var(--accent); }
+  .edu-badge.done { background: var(--bg2); color: var(--ink3); }
+  .edu-card h3 { font-size: 0.92rem; font-weight: 600; color: var(--ink); margin-bottom: 0.3rem; }
+  .edu-card .inst { font-size: 0.8rem; color: var(--ink3); margin-bottom: 1rem; }
+  .edu-meta { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .edu-meta-item { font-size: 0.78rem; color: var(--ink2); }
+  .edu-meta-item strong { color: var(--accent); font-weight: 600; }
+ 
+  /* CONTACT */
+  #contact { background: var(--white); }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+  .contact-desc { font-size: 0.93rem; color: var(--ink3); line-height: 1.85; margin-bottom: 2rem; }
+  .contact-links { display: flex; flex-direction: column; gap: 1rem; }
+  .clink { display: flex; align-items: center; gap: 1rem; padding: 1rem 1.25rem; border-radius: var(--radius); background: var(--bg); border: 1px solid var(--border); text-decoration: none; color: var(--ink); transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s; }
+  .clink:hover { border-color: rgba(200,96,42,0.3); transform: translateX(4px); box-shadow: var(--shadow); }
+  .cl-icon { width: 42px; height: 42px; border-radius: 10px; background: var(--accent-bg); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
+  .cl-text h4 { font-size: 0.83rem; font-weight: 600; color: var(--ink); }
+  .cl-text p { font-size: 0.73rem; color: var(--ink3); word-break: break-all; }
+  .cform { display: flex; flex-direction: column; gap: 1rem; }
+  .fg { display: flex; flex-direction: column; gap: 0.4rem; }
+  .fg label { font-size: 0.78rem; font-weight: 500; color: var(--ink2); }
+  .fg input, .fg textarea { background: var(--bg); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 0.85rem 1rem; font-family: 'Outfit', sans-serif; font-size: 0.88rem; color: var(--ink); outline: none; transition: border-color 0.2s; resize: none; }
+  .fg input:focus, .fg textarea:focus { border-color: var(--accent); }
+  .fg input::placeholder, .fg textarea::placeholder { color: var(--ink3); }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+ 
+  footer { background: var(--ink); color: rgba(255,255,255,0.45); padding: 2rem 5%; text-align: center; font-size: 0.78rem; }
+  footer strong { color: rgba(255,255,255,0.85); }
+  footer span { color: var(--accent2); }
+ 
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+ 
+  @media (max-width: 768px) {
+    nav { padding: 0 1.25rem; }
+    .nav-links { display: none; flex-direction: column; position: fixed; top: 68px; left: 0; right: 0; background: var(--white); border-bottom: 1px solid var(--border); padding: 0.5rem 0; }
+    .nav-links.open { display: flex; }
+    .nav-links a { padding: 0.75rem 1.5rem; border-bottom: 1px solid var(--border2); }
+    .hamburger { display: flex; }
+    section { padding: 64px 1.25rem; }
+    .hero-inner, .about-grid, .contact-grid { grid-template-columns: 1fr; }
+    .hero-card { display: none; }
+    .about-grid { gap: 2rem; }
+    .contact-grid { gap: 2.5rem; }
+    .form-row { grid-template-columns: 1fr; }
+    .cert-hero { flex-direction: column; text-align: center; gap: 1.5rem; }
+    .hero-actions { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+ 
+<nav id="navbar">
+  <a class="nav-logo" href="#hero">Sai Priya<span>.</span></a>
+  <div class="nav-links" id="navLinks">
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#certifications">Certifications</a>
+    <a href="#education">Education</a>
+    <a href="#contact" class="nav-cta">Hire Me</a>
+  </div>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+ 
+<section id="hero">
+  <div class="blob"></div>
+  <div class="hero-inner container">
+    <div>
+      <div class="hero-badge">Open to Internship &amp; Placement 2027</div>
+      <h1 class="hero-title">VEERAM<br><em>SAI PRIYA</em></h1>
+      <p class="hero-role">BTech CSE (AI &amp; ML) — 3rd Year &nbsp;·&nbsp; Mohan Babu University</p>
+      <p class="hero-desc">A passionate AI &amp; ML student and <strong>ServiceNow Certified System Administrator</strong> — ready to contribute to enterprise technology and digital transformation teams.</p>
+      <div class="hero-actions">
+        <a href="#certifications" class="btn-primary">View Certification</a>
+        <a href="#contact" class="btn-outline">Get in Touch</a>
+      </div>
+    </div>
+    <div class="hero-card">
+      <div class="avatar">VSP</div>
+      <p class="hero-card-name">Veeram Sai Priya</p>
+      <p class="hero-card-role">CSE (AI &amp; ML) · Mohan Babu University</p>
+      <div class="avail">Available for Opportunities</div>
+      <div class="stat-grid">
+        <div class="stat"><strong>AI&ML</strong><span>Specialization</span></div>
+        <div class="stat"><strong>3rd</strong><span>Year</span></div>
+        <div class="stat"><span>ServiceNow</span><strong>CSA</strong><span>Certified</span></div>
+        <div class="stat"><strong>2027</strong><span>Graduating</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<section id="about">
+  <div class="container">
+    <div class="section-label">About Me</div>
+    <div class="section-title">Who I Am</div>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>Hi! I'm <strong>Veeram Sai Priya</strong>, a 3rd year B.Tech Computer Science student specializing in <strong>Artificial Intelligence &amp; Machine Learning</strong> at Mohan Babu University, Andhra Pradesh.</p>
+        <p>I hold a <strong>ServiceNow Certified System Administrator (CSA)</strong> certification — a globally recognized credential that validates expertise in IT service management and enterprise platform administration.</p>
+        <p>I'm passionate about technology, automation, and enterprise platforms. I'm actively seeking internship and placement opportunities where I can learn, grow, and deliver real impact.</p>
+        <div class="highlights">
+          <div class="hl">
+            <div class="hl-icon">🏅</div>
+            <div><h4>ServiceNow Certified (CSA)</h4><p>Globally recognized certification in IT service management and enterprise platform administration</p></div>
+          </div>
+          <div class="hl">
+            <div class="hl-icon">🤖</div>
+            <div><h4>AI &amp; ML Enthusiast</h4><p>Specializing in Artificial Intelligence and Machine Learning with interest in real-world applications</p></div>
+          </div>
+          <div class="hl">
+            <div class="hl-icon">🚀</div>
+            <div><h4>Proactive Learner</h4><p>Achieved a professional certification while in 3rd year — committed to continuous self-improvement</p></div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="info-card">
+          <h3>Quick Info</h3>
+          <table class="info-table">
+            <tr><td>Full Name</td><td>Veeram Sai Priya</td></tr>
+            <tr><td>College</td><td>Mohan Babu University</td></tr>
+            <tr><td>Branch</td><td>B.Tech CSE (AI &amp; ML)</td></tr>
+            <tr><td>Year</td><td>3rd Year — 2027 Batch</td></tr>
+            <tr><td>10th Grade</td><td>99.8%</td></tr>
+            <tr><td>Intermediate</td><td>97.9%</td></tr>
+            <tr><td>Location</td><td>Andhra Pradesh, India</td></tr>
+            <tr><td>Email</td><td><a href="mailto:veeramsaipriya07@gmail.com">veeramsaipriya07@gmail.com</a></td></tr>
+            <tr><td>Phone</td><td><a href="tel:+916301557097">+91 63015 57097</a></td></tr>
+            <tr><td>LinkedIn</td><td><a href="https://www.linkedin.com/in/veeram-saipriya-135016384/" target="_blank">View Profile →</a></td></tr>
+            <tr><td>GitHub</td><td><a href="https://github.com/veeramsaipriya2005-creator" target="_blank">View Profile →</a></td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<section id="skills">
+  <div class="container">
+    <div class="section-label">Technical Skills</div>
+    <div class="section-title">What I Know</div>
+    <p class="section-desc">Skills gained through university coursework, self-learning, and hands-on certification training.</p>
+    <div class="skills-grid">
+      <div class="skill-card reveal">
+        <div class="skill-icon">💻</div>
+        <h4>Programming Languages</h4>
+        <div class="skill-tags"><span class="tag">Python</span><span class="tag">Java</span><span class="tag">SQL</span></div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon">🤖</div>
+        <h4>AI &amp; Machine Learning</h4>
+        <div class="skill-tags"><span class="tag">ML Concepts</span><span class="tag">AI Applications</span></div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon">⚙️</div>
+        <h4>ServiceNow Platform</h4>
+        <div class="skill-tags"><span class="tag">System Admin</span><span class="tag">ITSM</span><span class="tag">CSA ✓</span></div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon">🌐</div>
+        <h4>Web Technologies</h4>
+        <div class="skill-tags"><span class="tag">HTML5</span><span class="tag">JavaScript</span></div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon">📐</div>
+        <h4>Core CS Concepts</h4>
+        <div class="skill-tags"><span class="tag">OOPs</span><span class="tag">DBMS</span><span class="tag">DSA</span><span class="tag">OS</span><span class="tag">CN</span></div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon">🛠️</div>
+        <h4>Tools &amp; Platforms</h4>
+        <div class="skill-tags"><span class="tag">Git</span><span class="tag">GitHub</span><span class="tag">VS Code</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<section id="certifications">
+  <div class="container">
+    <div class="section-label">Certifications</div>
+    <div class="section-title">My Achievement</div>
+    <p class="section-desc">A globally recognized professional certification earned during my 3rd year of B.Tech.</p>
+    <div class="cert-hero reveal">
+      <div class="cert-icon">🏅</div>
+      <div>
+        <h3>ServiceNow Certified System Administrator (CSA)</h3>
+        <p>The ServiceNow CSA is a globally recognized certification that validates the ability to administer and configure the ServiceNow platform — used by Fortune 500 companies worldwide for ITSM and enterprise workflow automation. Earning this as a 3rd year student demonstrates strong initiative and technical depth.</p>
+        <div class="cert-pills">
+          <span class="cpill main">✓ Certified</span>
+          <span class="cpill">ServiceNow</span>
+          <span class="cpill">ITSM</span>
+          <span class="cpill">Enterprise Platform</span>
+          <span class="cpill">Global Credential</span>
+        </div>
+      </div>
+    </div>
+    <div class="cert-details">
+      <div class="cd-card reveal">
+        <h4>Platform Administration</h4>
+        <p>User management, roles, access controls, system properties and UI configuration on ServiceNow</p>
+      </div>
+      <div class="cd-card reveal">
+        <h4>IT Service Management</h4>
+        <p>Incident, Problem, Change and Request management using ServiceNow ITSM modules</p>
+      </div>
+      <div class="cd-card reveal">
+        <h4>Workflow Automation</h4>
+        <p>Designing and managing automated workflows, notifications, SLAs and approval processes</p>
+      </div>
+      <div class="cd-card reveal">
+        <h4>Database &amp; Reporting</h4>
+        <p>Managing tables, forms, lists and generating insightful reports and dashboards</p>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<section id="education">
+  <div class="container">
+    <div class="section-label">Education</div>
+    <div class="section-title">Academic Background</div>
+    <p class="section-desc">A strong academic track record with exceptional performance in Intermediate.</p>
+    <div class="edu-grid">
+      <div class="edu-card current reveal">
+        <span class="edu-badge">Ongoing</span>
+        <h3>B.Tech — Computer Science &amp; Engineering (AI &amp; ML)</h3>
+        <p class="inst">Mohan Babu University, Andhra Pradesh</p>
+        <div class="edu-meta">
+          <div class="edu-meta-item">Batch: <strong>2023 – 2027</strong></div>
+          <div class="edu-meta-item">Year: <strong>3rd Year</strong></div>
+        </div>
+      </div>
+      <div class="edu-card reveal">
+        <span class="edu-badge done">Completed</span>
+        <h3>Intermediate (MPC)</h3>
+        <p class="inst">Andhra Pradesh State Board</p>
+        <div class="edu-meta">
+          <div class="edu-meta-item">Score: <strong>97.9%</strong></div>
+          <div class="edu-meta-item">Year: <strong>2023</strong></div>
+          <div class="edu-meta-item">JEE Mains Percentile: : <strong>90.36%</strong></div>
+        </div>
+      </div>
+      <div class="edu-card reveal">
+        <span class="edu-badge done">Completed</span>
+        <h3>SSC — Class 10</h3>
+        <p class="inst">Andhra Pradesh State Board</p>
+        <div class="edu-meta">
+          <div class="edu-meta-item">Score: <strong>99.8%</strong></div>
+          <div class="edu-meta-item">Year: <strong>2021</strong></div>
+        </div>
+      </div>
+      <div class="edu-card reveal" style="border:1.5px dashed var(--border);background:transparent;display:flex;align-items:center;justify-content:center;min-height:160px;">
+        <div style="text-align:center;color:var(--ink3);">
+          <div style="font-size:2rem;margin-bottom:0.5rem;">🎓</div>
+          <p style="font-size:0.85rem;">Expected Graduation<br><strong style="color:var(--ink)">May 2027</strong></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<section id="contact">
+  <div class="container">
+    <div class="section-label">Contact</div>
+    <div class="section-title">Let's Connect</div>
+    <div class="contact-grid">
+      <div>
+        <p class="contact-desc">I'm actively looking for internship and placement opportunities in SAP, ServiceNow, enterprise technology, and AI/ML domains. Feel free to reach out — I'd love to connect!</p>
+        <div class="contact-links">
+          <a href="mailto:veeramsaipriya07@gmail.com" class="clink">
+            <div class="cl-icon">✉️</div>
+            <div class="cl-text"><h4>Email</h4><p>veeramsaipriya07@gmail.com</p></div>
+          </a>
+          <a href="tel:+916301557097" class="clink">
+            <div class="cl-icon">📞</div>
+            <div class="cl-text"><h4>Phone</h4><p>+91 63015 57097</p></div>
+          </a>
+          <a href="https://www.linkedin.com/in/veeram-saipriya-135016384/" target="_blank" class="clink">
+            <div class="cl-icon">💼</div>
+            <div class="cl-text"><h4>LinkedIn</h4><p>veeram-saipriya-135016384</p></div>
+          </a>
+          <a href="https://github.com/veeramsaipriya2005-creator" target="_blank" class="clink">
+            <div class="cl-icon">🐙</div>
+            <div class="cl-text"><h4>GitHub</h4><p>veeramsaipriya2005-creator</p></div>
+          </a>
+        </div>
+      </div>
+      <div class="cform reveal">
+        <div class="form-row">
+          <div class="fg"><label>Your Name</label><input type="text" placeholder="Enter your name"></div>
+          <div class="fg"><label>Your Email</label><input type="email" placeholder="Enter your email"></div>
+        </div>
+        <div class="fg"><label>Subject</label><input type="text" placeholder="Internship / Opportunity / Collaboration"></div>
+        <div class="fg"><label>Message</label><textarea rows="5" placeholder="Tell me about the opportunity..."></textarea></div>
+        <button class="btn-primary" style="width:100%;border:none;cursor:pointer;" onclick="alert('Thank you! Sai Priya will get back to you soon. 😊')">Send Message →</button>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<footer>
+  <p>By <strong>Veeram Sai Priya</strong> &nbsp;·&nbsp; BTech CSE (AI &amp; ML) &nbsp;·&nbsp; <span>ServiceNow CSA Certified</span></p>
+  <p style="margin-top:0.5rem;font-size:0.72rem;">© 2027 Veeram Sai Priya · Mohan Babu University · Andhra Pradesh</p>
+</footer>
+ 
+<script>
+  const ham = document.getElementById('hamburger');
+  const nl = document.getElementById('navLinks');
+  ham.addEventListener('click', () => nl.classList.toggle('open'));
+  document.querySelectorAll('.nav-links a').forEach(a => a.addEventListener('click', () => nl.classList.remove('open')));
+  window.addEventListener('scroll', () => document.getElementById('navbar').classList.toggle('scrolled', scrollY > 20));
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => { if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 90); obs.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  const secs = document.querySelectorAll('section[id]');
+  window.addEventListener('scroll', () => {
+    let cur = '';
+    secs.forEach(s => { if (scrollY >= s.offsetTop - 100) cur = s.id; });
+    document.querySelectorAll('.nav-links a').forEach(a => { a.style.color = a.getAttribute('href') === '#' + cur ? 'var(--accent)' : ''; });
+  });
+</script>
+</body>
+</html>
+
